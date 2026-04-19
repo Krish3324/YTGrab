@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YT Grab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="4" width="20" height="16" rx="3" fill="#FF0000"/>
+        <polygon points="10,8 16,12 10,16" fill="white"/>
+      </svg>
+      <span class="logo-text">YT<span class="logo-accent">Grab</span></span>
+    </div>
+    <div class="status-dot" id="statusDot" title="Checking..."></div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- NOT YOUTUBE STATE -->
+    <div class="state" id="stateNotYT">
+      <div class="state-icon">⚡</div>
+      <p class="state-msg">Open a YouTube video<br/>to get started.</p>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div class="state hidden" id="stateLoading">
+      <div class="loader">
+        <span></span><span></span><span></span>
+      </div>
+      <p class="state-msg">Fetching video info…</p>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div class="state hidden" id="stateError">
+      <div class="state-icon">⚠️</div>
+      <p class="state-msg" id="errorMsg">Something went wrong.</p>
+      <button class="btn btn-ghost" id="retryBtn">Retry</button>
+    </div>
+
+    <!-- VIDEO INFO + CONTROLS -->
+    <div class="panel hidden" id="panelMain">
+
+      <!-- Thumbnail + meta -->
+      <div class="video-card">
+        <img class="thumb" id="videoThumb" src="" alt="thumbnail" />
+        <div class="meta">
+          <p class="video-title" id="videoTitle">—</p>
+          <p class="video-channel" id="videoChannel">—</p>
+          <p class="video-duration" id="videoDuration"></p>
+        </div>
+      </div>
+
+      <!-- URL row -->
+      <div class="url-row">
+        <input class="url-input" id="urlInput" type="text" readonly value="" />
+        <button class="btn btn-icon" id="copyBtn" title="Copy URL">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Format tabs -->
+      <div class="format-tabs" id="formatTabs">
+        <button class="tab active" data-format="mp4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15 10l4.553-2.07A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+          MP4
+        </button>
+        <button class="tab" data-format="mp3">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13M9 18a3 3 0 01-6 0 3 3 0 016 0zm12-2a3 3 0 01-6 0 3 3 0 016 0z"/></svg>
+          MP3
+        </button>
+      </div>
+
+      <!-- Quality selector -->
+      <div class="quality-group" id="qualityGroup">
+        <label class="group-label">Quality</label>
+        <div class="quality-grid" id="qualityGrid">
+          <!-- Populated by popup.js -->
+        </div>
+      </div>
+
+      <!-- Download button -->
+      <button class="btn btn-primary" id="downloadBtn">
+        <svg class="btn-icon-left" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span id="downloadBtnText">Download</span>
+      </button>
+
+      <!-- Progress / feedback -->
+      <div class="feedback hidden" id="feedback">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <p class="feedback-msg" id="feedbackMsg">Starting download…</p>
+      </div>
+
+    </div><!-- /panelMain -->
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>Powered by <a href="https://cobalt.tools" target="_blank" rel="noopener">cobalt.tools</a></span>
+    <span class="sep">·</span>
+    <span>For personal use only</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
